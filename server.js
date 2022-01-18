@@ -20,6 +20,7 @@ const data = fs.readFile('./productos.txt', 'utf-8', (err, res) => {
         let numeroRandom = getRandomInt(1,3)
         productoRandom = info.find((producto) => producto.id == numeroRandom)
         console.log(productoRandom);
+        
     }
 })
 
@@ -27,13 +28,18 @@ const data = fs.readFile('./productos.txt', 'utf-8', (err, res) => {
 app.get('/', (req, res) => {
   res.send(`
   <h1>Bienvenidos al servidor Express </h1>
-  <a href="http://localhost:${port}/productos">productos</a>
-  <a href="http://localhost:${port}/productoRandom">producto random</a>
+  <ul>
+  <li><a href="http://localhost:${port}/productos">productos</a></li>
+  <li><a href="http://localhost:${port}/productoRandom">producto random</a></li>
+  </ul>
   `)
 })
 
 app.get('/productos', (req, res) => {
     res.send(info)
+    res.send(
+        
+    )
 })
 
 app.get('/productoRandom', (req, res) => {
