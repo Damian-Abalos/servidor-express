@@ -1,29 +1,10 @@
 const express = require('express');
+const Contenedor =  require('./contenedor')
 const fs = require("fs");
 const app = express();
 const port = 8080;
 
-let info;
-
-let productoRandom;
-
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min)) + min;
-}
-
-const data = fs.readFile('./productos.txt', 'utf-8', (err, res) => {
-    if (err) {
-        throw new Error(`Error en lectura: ${err}`)
-    } else {
-        info = JSON.parse(res)
-        console.log(info);
-        let numeroRandom = getRandomInt(1,3)
-        productoRandom = info.find((producto) => producto.id == numeroRandom)
-        console.log(productoRandom);
-        
-    }
-})
-
+const contenedor1 = new Contenedor("./productos.txt");
 
 app.get('/', (req, res) => {
   res.send(`
@@ -36,15 +17,12 @@ app.get('/', (req, res) => {
 })
 
 app.get('/productos', (req, res) => {
-    res.send(info)
-    res.send(
-        
-    )
+    res.send(contenedor1.getAll())
 })
 
 app.get('/productoRandom', (req, res) => {
     
-    res.send(productoRandom)
+    res.send(contenedor1.getRandom())
 })
 
 app.listen(port, () => {
